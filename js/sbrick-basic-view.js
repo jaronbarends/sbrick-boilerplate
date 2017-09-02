@@ -39,6 +39,7 @@
 			sensorInterpration = window.sbrickUtil.getSensorInterpretation(sensorData.value, sensorType);
 
 		// do something useful here
+		window.util.log(sensorType, sensorInterpration);
 	};
 	
 	
@@ -59,7 +60,7 @@
 	* @returns {undefined}
 	*/
 	const init = function() {
-		window.mySBrick = window.mySBrick || new SBrick();
+		window.mySBrick = window.mySBrick || new SBrickExtended();
 		mySBrick = window.mySBrick;
 		
 		addEventListeners();

@@ -1,7 +1,8 @@
 .log-window {
-	display: none;
+	/*display: none;*/
 	text-align: left;
 	transform: translateY(560px);/* viewport height */
+	transform: translateY(360px);
 	padding: 0.5em;
 	font-size: 1.2rem;
 	background: beige;

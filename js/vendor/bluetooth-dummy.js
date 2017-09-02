@@ -36,7 +36,6 @@ let WebBluetoothDummy = (function() {
 		}
 
 
-
 		/**
 		* mimic connecting to a device
 		* @returns {undefined}
@@ -59,7 +58,7 @@ let WebBluetoothDummy = (function() {
 						}
 					};
 					resolve();
-				}, 200);
+				}, 500);
 			});
 		}
 
@@ -86,7 +85,6 @@ let WebBluetoothDummy = (function() {
 		* @returns {promise returning datavies}
 		*/
 		readCharacteristicValue(characteristicUuid) {
-			// console.log(characteristicUuid);
 			return new Promise( (resolve, reject) => {
 				var buffer = new ArrayBuffer(16);
 				var dataview = new DataView(buffer, 0);

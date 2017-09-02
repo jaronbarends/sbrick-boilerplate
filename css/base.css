@@ -15,23 +15,15 @@ body {
 	padding: 0;
 	position: relative;
 	font-family: arial, helvetica, sans-serif;
-	font-size: 1.4rem;
+	font-size: 1.6rem;
+	line-height: 1.5;
 }
 
 a {
 	color: royalblue;
 }
 
-
-output {
-	display: inline-block;
-	border: 1px solid;
-	padding: 0.5em;
-	height: 1em;
-	width: 5em;
-}
-
 .is-hidden {
-	/*visibility: hidden;*/
 	opacity: 0;
+	pointer-events: none;
 }

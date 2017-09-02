@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="nl-nl">
 <head>
@@ -7,9 +6,9 @@
 	
 	<title>SBrick Boilerplate</title>
 	<link rel="stylesheet" href="css/base.css">
-	<link rel="stylesheet" href="css/interface.css">
+	<link rel="stylesheet" href="css/screen.css">
+	<link rel="stylesheet" href="css/connection.css">
 	<link rel="stylesheet" href="css/buttons.css">
-	<link rel="stylesheet" href="css/button-controller.css">
 	<link rel="stylesheet" href="css/log-window.css">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,30 +18,51 @@
 
 	<div class="viewport">
 
-		<div id="connect-screen" class="screen connect-screen">
+		<!-- Start connect screen -->
 
-			<div class="busy-indicator">&ndash; connecting to Lego &ndash;</div>
+			<div id="connect-screen" class="screen connect-screen">
 
-			<button id="connect-btn" class="btn btn--start btn--connect">
-				Connect
-			</button>
+				<div class="busy-indicator">&ndash; connecting to Lego &ndash;</div>
 
-		</div>
+				<button id="connect-btn" class="btn btn--start btn--connect">
+					Connect
+				</button>
+
+			</div><!-- /.connect-screen -->
+
+		<!-- End connect screen -->
 
 		
-		<div id="controlPanel" class="screen control-panel is-hidden">
+		<!-- Start main screen -->
 
-			<button id="stop-all" class="btn btn--stop btn--stop-all">stop all</button>
-			<button id="disconnect-btn" class="btn btn--disconnect">Disconnect</button>
+			<div id="main-screen" class="screen main-screen is-hidden">
 
-		</div>
+				<p>
+					<button id="start-lights" class="btn">Lights (top left)</button>
+				</p>
+				<p>
+					<button id="start-drive" class="btn">Drive (bottom left)</button>
+				</p>
+				<p>
+					<button id="start-servo" class="btn">Start servo (top right)</button>
+				</p>
+				<p>
+					<button id="start-sensor" class="btn">Start sensor (bottom right)</button>
+				</p>
+				<button id="stop-all" class="btn btn--stop">Stop all</button>
+				<button id="disconnect-btn" class="btn btn--disconnect">Disconnect</button>
+
+			</div>
+
+		<!-- Start main screen -->
 
 
-
-		<div id="log-window" class="log-window">
-			<a href="#" id="clear-log">clear</a>
-			<div id="log-msg-box"></div>
-		</div>
+		<!-- Start logging window -->
+			<div id="log-window" class="log-window">
+				<a href="#" id="clear-log">clear</a>
+				<div id="log-msg-box"></div>
+			</div>
+		<!-- End logging window -->
 
 	</div><!-- /.viewport -->
 
@@ -52,12 +72,13 @@
 		<script src="js/vendor/bluetooth-dummy.js"></script>
 		<script src="js/vendor/sbrick.js"></script>
 
-	<!-- sbrick scripts -->
+	<!-- own scripts -->
+		<script src="js/SBrickExtended.js"></script>
 		<script src="js/sbrick-util.js"></script>
 		<script src="js/util.log.js"></script>
 
 		<script src="js/sbrick-basic-view.js"></script>
 		<script src="js/basic-controller.js"></script>
-		<script src="js/interface.js"></script>
+		<script src="js/connection.js"></script>
 </body>
 </html>

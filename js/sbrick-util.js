@@ -1,5 +1,6 @@
 /*
 * specific helper functions for sbrick
+* Stuff in here could be added to the overall properties of sbrick.js (as opposed to class properties)
 */
 (() => {
 
@@ -8,10 +9,10 @@
 		
 
 	const PORTS = {
-		PORT_TOP_LEFT: 0,
-		PORT_BOTTOM_LEFT: 1,
-		PORT_TOP_RIGHT: 2,
-		PORT_BOTTOM_RIGHT: 3
+		TOP_LEFT: 0,
+		BOTTOM_LEFT: 1,
+		TOP_RIGHT: 2,
+		BOTTOM_RIGHT: 3
 	};
 
 	/**
@@ -40,18 +41,13 @@
 	/**
 	* translate servo's angle to corresponding power-value
 	* @param {number} angle - The angle of the servo motor
-	* @returns {number} The corresponding power value
+	* @returns {number} The corresponding power value (0-255)
 	*/
 	const servoAngleToPower = function(angle) {
-		let power = 0;
+		// servo motor only supports 7 angles per 90 degrees, i.e. increments of 13 degrees
 		angle = parseInt(angle, 10);
-		for (let i=0, len=powerAngles.length; i<len; i++) {
-			const obj = powerAngles[i];
-			if (angle === obj.angle) {
-				power = obj.power;
-				break;
-			}
-		}
+		const idx = Math.round(angle/13);
+		let power = powerAngles[idx].power;
 
 		return power;
 	};
@@ -59,7 +55,7 @@
 
 	/**
 	* translate servo's power to corresponding angle-value
-	* @param {number} power - The current power of the servo motor
+	* @param {number} power - The current power (0-255) of the servo motor
 	* @returns {number} The corresponding angle value
 	*/
 	const servoPowerToAngle = function(power) {

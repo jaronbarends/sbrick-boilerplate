@@ -1,6 +1,5 @@
 /*
-* General file for setting up the interface
-* and the connection with the SBrick
+* General file for setting up the connection with the SBrick
 */
 (() => {
 
@@ -13,7 +12,7 @@
 		connectScreen,
 		connectBtn,
 		disconnectBtn,
-		controlPanel,
+		mainScreen,
 		mySBrick;
 
 
@@ -109,21 +108,14 @@
 	*/
 	const updateConnectionState = function() {
 		if (mySBrick.isConnected()) {
-			// connectBtn.classList.remove('btn--is-busy', 'btn--start');
-			// connectBtn.classList.add('btn--stop');
-			// connectBtn.innerHTML = 'Disconnect';
 			connectScreen.classList.remove('is-busy');
 			connectScreen.classList.add('is-hidden');
-			controlPanel.classList.remove('is-hidden');
+			mainScreen.classList.remove('is-hidden');
 		} else {
 			// disconnected
-			// connectBtn.classList.remove('btn--is-busy', 'btn--stop');
-			// connectBtn.classList.add('btn--start');
-			// connectBtn.innerHTML = 'Connect';
 			connectScreen.classList.add('is-busy');
 			connectScreen.classList.remove('is-hidden');
-			// connectBtn.classList.remove('is-hidden');
-			controlPanel.classList.add('is-hidden');
+			mainScreen.classList.add('is-hidden');
 		}
 	};
 	
@@ -135,7 +127,6 @@
 	* @returns {undefined}
 	*/
 	const connectHandler = function() {
-		// connectBtn.classList.add('btn--is-busy');
 		connectSBrick();
 	};
 
@@ -146,7 +137,6 @@
 	* @returns {undefined}
 	*/
 	const disconnectHandler = function() {
-		// connectBtn.classList.add('btn--is-busy');
 		disconnectSBrick();
 	};
 	
@@ -190,12 +180,12 @@
 	* @returns {undefined}
 	*/
 	const init = function() {
-		window.mySBrick = window.mySBrick || new SBrick();
+		window.mySBrick = window.mySBrick || new SBrickExtended();
 		mySBrick = window.mySBrick;
 		connectScreen = document.getElementById('connect-screen');
 		connectBtn = document.getElementById('connect-btn');
 		disconnectBtn = document.getElementById('disconnect-btn');
-		controlPanel = document.getElementById('controlPanel');
+		mainScreen = document.getElementById('main-screen');
 
 		checkDummyMode();
 
