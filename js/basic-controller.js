@@ -10,40 +10,6 @@
 
 
 	//-- Start generic functions for controlling appliances
-
-		/**
-		* update a set of lights
-		* @param {object} data - New settings for this port {portId, power (0-100), direction}
-		* @returns {undefined}
-		*/
-		const setLights = function(data) {
-			data.power = Math.round(mySBrick.MAX * data.power/100);
-			mySBrick.drive(data);
-		};
-
-
-
-		/**
-		* update a drive motor
-		* @param {object} data - New settings for this port {portId, power (0-100), direction}
-		* @returns {undefined}
-		*/
-		const setDrive = function(data) {
-			data.power = window.sbrickUtil.drivePercentageToPower(data.power);
-			mySBrick.drive(data);
-		};
-
-
-
-		/**
-		* update a servo motor
-		* @param {object} data - New settings for this port {portId, angle (0-90), direction}
-		* @returns {undefined}
-		*/
-		const setServo = function(data) {
-			data.power = window.sbrickUtil.servoAngleToPower(data.angle);
-			mySBrick.drive(data);
-		};
 	
 
 		/**
@@ -82,7 +48,7 @@
 			portId: mySBrick.PORTS.TOP_LEFT,
 			power: 100
 		};
-		setLights(data);
+		mySBrick.setLights(data);
 	};
 
 
@@ -97,7 +63,7 @@
 			power: 100,
 			direction: SBrick.CLOCKWISE
 		};
-		setDrive(data);
+		mySBrick.setDrive(data);
 	};
 
 
@@ -112,7 +78,7 @@
 			angle: 45,
 			direction: SBrick.CLOCKWISE
 		};
-		setServo(data);
+		mySBrick.setServo(data);
 	};
 
 	
@@ -122,15 +88,8 @@
 	* @returns {undefined}
 	*/
 	const startSensor = function() {
-		const portId = mySBrick.PORTS.BOTTOM_RIGHT,
-			data = {
-				portId
-			};
-		sensorTimeoutIsCancelled = false;
-		getSensorData(portId);
-
-		const event = new CustomEvent('sensorstart.sbrick', {detail: data});
-		document.body.dispatchEvent(event);
+		const portId = mySBrick.PORTS.BOTTOM_RIGHT;
+		mySBrick.startSensor(portId);
 	};
 
 
@@ -139,13 +98,7 @@
 	* @returns {undefined}
 	*/
 	const stopSensor = function(portId) {
-		// sensorData timeout is only set when the promise resolves
-		// but in the time the promise is pending, there is no timeout to cancel
-		// so let's set a var that has to be checked before calling a new setTimeout
-		sensorTimeoutIsCancelled = true;
-
-		const event = new CustomEvent('sensorstop.sbrick', {detail: {portId}});
-		document.body.dispatchEvent(event);
+		mySBrick.stopSensor(portId);
 	};
 
 
@@ -234,8 +187,9 @@
 	const initControls = function() {
 		document.getElementById('start-lights').addEventListener('click', startLights);
 		document.getElementById('start-drive').addEventListener('click', startDrive);
-		document.getElementById('start-sensor').addEventListener('click', startSensor);
 		document.getElementById('start-servo').addEventListener('click', startServo);
+		document.getElementById('start-sensor').addEventListener('click', startSensor);
+		document.getElementById('stop-sensor').addEventListener('click', stopSensor);
 		document.getElementById('stop-all').addEventListener('click', stopAll);
 	};
 	
@@ -253,7 +207,6 @@
 
 		initSBrickEventListeners();
 		initControls();
-		window.util.log('done!');
 	};
 
 	// kick of the script when all dom content has loaded

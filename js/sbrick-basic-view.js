@@ -36,7 +36,7 @@
 	const sensorchangeHandler = function(e) {
 		const sensorData = e.detail,
 			sensorType = sensorData.type;// tilt | motion
-			sensorInterpration = window.sbrickUtil.getSensorInterpretation(sensorData.value, sensorType);
+			sensorInterpration = sensorData.interpretation;
 
 		// do something useful here
 		window.util.log(sensorType, sensorInterpration);
