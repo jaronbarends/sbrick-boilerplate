@@ -45,7 +45,7 @@
 	const startLights = function(e) {
 		e.preventDefault();
 		const data = {
-			portId: mySBrick.PORTS.TOP_LEFT,
+			portId: mySBrick.TOPLEFT,
 			power: 100
 		};
 		mySBrick.setLights(data);
@@ -59,7 +59,7 @@
 	const startDrive = function(e) {
 		e.preventDefault();
 		const data = {
-			portId: mySBrick.PORTS.BOTTOM_LEFT,
+			portId: mySBrick.BOTTOMLEFT,
 			power: 100,
 			direction: SBrick.CLOCKWISE
 		};
@@ -74,7 +74,7 @@
 	const startServo = function(e) {
 		e.preventDefault();
 		const data = {
-			portId: mySBrick.PORTS.TOP_RIGHT,
+			portId: mySBrick.TOPRIGHT,
 			angle: 45,
 			direction: SBrick.CLOCKWISE
 		};
@@ -88,7 +88,7 @@
 	* @returns {undefined}
 	*/
 	const startSensor = function() {
-		const portId = mySBrick.PORTS.BOTTOM_RIGHT;
+		const portId = mySBrick.BOTTOMRIGHT;
 		mySBrick.startSensor(portId);
 	};
 
@@ -97,7 +97,8 @@
 	* stop the sensor
 	* @returns {undefined}
 	*/
-	const stopSensor = function(portId) {
+	const stopSensor = function() {
+		const portId = mySBrick.BOTTOMRIGHT;
 		mySBrick.stopSensor(portId);
 	};
 
