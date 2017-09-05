@@ -142,7 +142,7 @@ let SBrickExtended = (function() {
 
 		/**
 		* get interpretation for a sensor value, depending on the kind of sensor
-		* @returns {string} Interpretation: unknown (default) or [close | intermediate | clear] (motion) or [flat | left | right | up | down] (tilt)
+		* @returns {string} Interpretation: unknown (default) or [close | midrange | clear] (motion) or [flat | left | right | up | down] (tilt)
 		*/
 		const _getSensorInterpretation = function(value, sensorType) {
 			let interpretation = 'unknown';
@@ -152,7 +152,7 @@ let SBrickExtended = (function() {
 				if (value <= 60) {
 					interpretation = 'close';
 				} else if (isValueBetween(value, 61, 109)) {
-					interpretation = 'intermediate';
+					interpretation = 'midrange';
 				} else if (value >= 110) {
 					interpretation = 'clear';
 				}
@@ -299,21 +299,24 @@ let SBrickExtended = (function() {
 				let sensorObj = this._getSensorObj(portId);
 				this.getSensor(portId, sensorSeries)
 					.then((sensorData) => {
-						// sensorData: { type, voltage, ch0_raw, ch1_raw, value }
+						// sensorData looks like this: { type, voltage, ch0_raw, ch1_raw, value }
+
+						const interpretation = _getSensorInterpretation(sensorData.value, sensorData.type),
+							{value, type} = sensorData;
 
 						// add interpretation to sensorData obj
-						sensorData.interpretation = _getSensorInterpretation(sensorData.value, sensorData.type);
+						sensorData.interpretation = interpretation;
 
 						// send event if the raw value of the sensor has changed
-						if (sensorData.value !== sensorObj.lastValue) {
-							sensorObj.lastValue = sensorData.value;
+						if (value !== sensorObj.lastValue) {
+							sensorObj.lastValue = value;
 							const changeValueEvent = new CustomEvent('sensorvaluechange.sbrick', {detail: sensorData});
 							document.body.dispatchEvent(changeValueEvent);
 						}
 
 						// send event if the interpretation of the sensor has changed
-						if (sensorData.interpretation !== sensorObj.lastInterpretation) {
-							sensorObj.lastInterpretation = sensorData.interpretation;
+						if (interpretation !== sensorObj.lastInterpretation) {
+							sensorObj.lastInterpretation = interpretation;
 							const event = new CustomEvent('sensorchange.sbrick', {detail: sensorData});
 							document.body.dispatchEvent(event);
 							
